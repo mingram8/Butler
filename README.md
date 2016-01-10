@@ -21,4 +21,3 @@ node server.js & chromium-browser "https://localhost:2001"
 <p>That should be it. Change /config/config.js to your <a href="http://github.com/mingram8/Node-House">Node-House</a> url and port, change your command files, and do pull requests with any cool aditions. 
 </p>
 
-
