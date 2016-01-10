@@ -8,7 +8,7 @@
 
 <h2>Raspberry pi use</h2>
 
-<p>I put my raspberry pi 2 in a radio/stereo box with a mic. It works wonderfully. I have it launch the node app and then launch Chromium to localhost:2001 on start up. Chromium automatically picks the mic. So it can be unplugged and moved anywhere and still start up fine. Make sure it autologs in and launches tot he cli. You can change that by typing sudo raspi-config.</p>
+<p>I put my raspberry pi 2 in a radio/stereo box with a mic. It works wonderfully. I have it launch the node app and then launch Chromium to localhost:2001 on start up. Now, I use pocketsphinx on startup. It picks up voice controls way better. Chromium automatically picks the mic. So it can be unplugged and moved anywhere and still start up fine. Make sure it autologs in and launches tot he cli. You can change that by typing sudo raspi-config.</p>
 
 <p>I added <b>startx</b> to the end of ~/.bashrc and <b>sleep 20 ~/.startUp.sh</b> to my ~.xinitrc. Do it this way, because launching straight to the desktop doesn't fire .xinitrc. Not sure why. startUp.sh is as follows:</p>
 
@@ -17,6 +17,17 @@
 cd ~/Butler</br>
 node server.js & chromium-browser "https://localhost:2001"
 </p>
+
+or 
+
+<p>
+#!/bin/bash
+./pock.sh &
+cd ~/Butler
+node server.js
+</p>
+
+<p>To use with pocketsphinx</p>
 
 <p>That should be it. Change /config/config.js to your <a href="http://github.com/mingram8/Node-House">Node-House</a> url and port, change your command files, and do pull requests with any cool aditions. 
 </p>
