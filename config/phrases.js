@@ -27,9 +27,4 @@ module.exports = ["Hey banks",
     "whichway",
     "budget",
     "St bank",
-<<<<<<< HEAD
     "okay pi"]
-=======
-    "okay pi"
-]
->>>>>>> master
