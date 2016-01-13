@@ -34,7 +34,12 @@ module.exports = [
     },
     {
         speech: [
+<<<<<<< HEAD
+            "dim the lights",
+            "in the lights"
+=======
             "dim the lights"
+>>>>>>> master
         ],
         type: "http",
         requestType:"get",
@@ -270,6 +275,61 @@ module.exports = [
         ]
     },
     {
+<<<<<<< HEAD
+        speech: ["dim the bedroom light",
+            "tim the bedroom light",
+            "in the bedroom light",
+            "then the bedroom light",
+            "did the bedroom light"
+
+        ],
+        type: "http",
+        requestType:"get",
+        action: [
+            config.host_ip +":"+config.host_port+ "/brightness/bedroom/hall/0",
+            config.host_ip +":"+config.host_port+ "/brightness/bedroom/lamp/0"]
+    },
+    {
+        speech: ["brighten the bedroom light",
+            "bright in the bedroom light",
+            "break the bedroom light",
+            "right the bedroom light",
+            "bright in the bedroom light"
+        ],
+        type: "http",
+        requestType:"get",
+        action: [
+            config.host_ip +":"+config.host_port+ "/brightness/bedroom/hall/100",
+            config.host_ip +":"+config.host_port+ "/brightness/bedroom/lamp/100"]
+    },
+    {
+        speech: ["turn off the bedroom light",
+            "the bedroom light off",
+            "the bedroom lights off",
+            "the bedroom lights sauce"
+        ],
+        type: "http",
+        requestType:"get",
+        action: [
+            config.host_ip +":"+config.host_port+ "/toggleLights/bedroom/hall/off",
+            config.host_ip +":"+config.host_port+ "/toggleLights/bedroom/lamp/off"]
+    },
+    {
+        speech: ["turn on the bedroom light",
+            "the bedroom light on",
+            "turn the bedroom light on",
+            "the bedroom lights on",
+            "the bedroom light song"
+        ],
+        type: "http",
+        requestType:"get",
+        action: [
+            config.host_ip +":"+config.host_port+ "/toggleLights/bedroom/hall/on",
+            config.host_ip +":"+config.host_port+ "/toggleLights/bedroom/lamp/on"]
+    },
+    {
+=======
+>>>>>>> master
         speech: ["Make the lights red"
         ],
         type: "http",
@@ -342,6 +402,18 @@ module.exports = [
 
     },
     {
+<<<<<<< HEAD
+        speech: ["football score"
+        ],
+        type: "get",
+        action: ["http://www.nfl.com/liveupdate/scores/scores.json?random=fucksack"],
+        values:["query.results.channel.wind.speed"],
+        response: ["The wind is blowing at ","Miles an hour"]
+
+    },
+    {
+=======
+>>>>>>> master
         speech: ["score"],
         type: "football",
         teams:[

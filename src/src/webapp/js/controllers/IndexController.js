@@ -13,29 +13,6 @@ app.controller('IndexController', function ($scope, $http, $sce, $interval, $tim
 
         }
     })
-<<<<<<< HEAD
-    $scope.toggleFullScreen = function () {
-        console.log('d')
-        if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {  // current working methods
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) {
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-            }
-        }
-    }
-    $scope.toggleFullScreen()
-    $interval(function(){
-        voices = window.speechSynthesis.getVoices();
-
-    })
-    if (window.location.href.indexOf('localhost') != -1 ) {
-
-=======
     $interval(function(){
         console.log(voices)
 
@@ -76,7 +53,6 @@ app.controller('IndexController', function ($scope, $http, $sce, $interval, $tim
         };
 
         speechSynthesis.speak(msg);
->>>>>>> master
     }
    try {
         var recognition = new webkitSpeechRecognition();
