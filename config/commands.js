@@ -34,8 +34,12 @@ module.exports = [
     },
     {
         speech: [
+<<<<<<< HEAD
             "dim the lights",
             "in the lights"
+=======
+            "dim the lights"
+>>>>>>> master
         ],
         type: "http",
         requestType:"get",
@@ -271,6 +275,7 @@ module.exports = [
         ]
     },
     {
+<<<<<<< HEAD
         speech: ["dim the bedroom light",
             "tim the bedroom light",
             "in the bedroom light",
@@ -323,6 +328,8 @@ module.exports = [
             config.host_ip +":"+config.host_port+ "/toggleLights/bedroom/lamp/on"]
     },
     {
+=======
+>>>>>>> master
         speech: ["Make the lights red"
         ],
         type: "http",
@@ -395,6 +402,7 @@ module.exports = [
 
     },
     {
+<<<<<<< HEAD
         speech: ["football score"
         ],
         type: "get",
@@ -404,6 +412,8 @@ module.exports = [
 
     },
     {
+=======
+>>>>>>> master
         speech: ["score"],
         type: "football",
         teams:[

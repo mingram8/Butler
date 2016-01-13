@@ -9,6 +9,66 @@ fs = require('fs')
 
 var nextCounter = 0;
 
+<<<<<<< HEAD
+=======
+//function readLines(){
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//    console.log("starting")
+//
+//    cmd.exec("arecord  -D plughw:1,0 sex.wav | sox sex.wav sex.dat");
+//
+//    var lineReader = require('readline').createInterface({
+//        input: require('fs').createReadStream(process.cwd()+'/sex.dat')
+//    });
+//    var timer = 0;
+//    var newTimer = 0;
+//    lineReader.on('line', function (line) {
+//        line = line.split(".")
+//        line ='.'+line[2]
+//        console.log('Line from file:', parseFloat(line) );
+//        newTimer ++;
+//        if (newTimer > 5000) {
+//            timer =0;
+//            newTimer = 0;
+//            cmd.exec("killall arecord")
+//            console.log('DONG')
+//            readLines();
+//        }
+//        if (line >.1) {
+//            timer ++;
+//            if (timer >2000) {
+//                timer =0;
+//                newTimer = 0;
+//                cmd.exec("killall arecord")
+//                console.log('DING')
+//                readLines();
+//            }
+//        }
+//    });
+//}
+//readLines()
+>>>>>>> master
 var newTimer =0;
 function compareString( s1, s2, splitChar ){
     if ( typeof splitChar == "undefined" ){
@@ -37,7 +97,18 @@ function compareString( s1, s2, splitChar ){
 }
 
 function actualDifference(string, string2) {
+<<<<<<< HEAD
     var string3 =''
+=======
+    console.log('----------------')
+    console.log(string)
+    console.log('----------------')
+
+    console.log(string2)
+    console.log('----------------')
+
+    console.log(string.split(string2))
+>>>>>>> master
     if (string)
     string3= string.split(string2)
     console.log("STRING: s"+string3)
@@ -53,6 +124,10 @@ fs.watch(process.cwd()+'/words.log', function (event, filename) {
                 return console.log(err);
             }
             var datas = actualDifference(data, oldData)
+<<<<<<< HEAD
+=======
+            console.log("DATA:" + data)
+>>>>>>> master
             var req = {}
             req.body = {}
             req.body.speech = datas;
@@ -144,8 +219,11 @@ exports.render = function (req, res) {
 }
 
 exports.speech = function (req, res) {
+<<<<<<< HEAD
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
+=======
+>>>>>>> master
     console.log(req.body.speech)
     var speech = req.body.speech.toLowerCase().replace(/\s+/g, '');
     require.cache[process.cwd() + "/config/commands.js"] = undefined;
@@ -156,6 +234,10 @@ exports.speech = function (req, res) {
 
     if (checkCatchPhrase(speech[0].toLowerCase().replace(/\s+/g, '')) === true && process.listening == false) {
         console.log('zing')
+<<<<<<< HEAD
+=======
+        cmd.exec(' espeak -ven+m3 -k5 "Yes Master"')
+>>>>>>> master
         process.listening = true;
         if (process.timeout != undefined) {
             clearTimeout(process.timeout);
@@ -163,15 +245,22 @@ exports.speech = function (req, res) {
         try {
             res.send(true)
         }
+<<<<<<< HEAD
 
     catch(e){}
         cmd.exec(' espeak -ven+m3 -k5 "Yes Master"')
 
+=======
+        catch(e){}
+>>>>>>> master
     }
 
      else if (process.listening === true) {
         var flag = false
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
         var check = checkSpeech(speech, commands)
         if (check.bool == true) {
             var timeout = 100;
@@ -182,6 +271,10 @@ exports.speech = function (req, res) {
                 process.index = 0;
                 console.log(check.command.action)
 
+<<<<<<< HEAD
+=======
+                cmd.exec(' espeak -ven+m3 -k5 "' + responses[Math.floor(Math.random() * (max - min + 1)) + min] + ' "');
+>>>>>>> master
 
                 for (var x = 0; x < check.command.action.length; x++) {
                     console.log(check.command.action)
@@ -215,9 +308,12 @@ exports.speech = function (req, res) {
 try {
     res.send(true)
 }        catch(e){}
+<<<<<<< HEAD
                 process.listening = false;
 
                 cmd.exec(' espeak -ven+m3 -k5 "' + responses[Math.floor(Math.random() * (max - min + 1)) + min] + ' "');
+=======
+>>>>>>> master
 
                 return false;
             }
@@ -258,7 +354,10 @@ try {
                                 }
                             }
                             console.log(string)
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
                             cmd.exec(' espeak -ven+m3 -g 5 -k5 -m "' + string + '"')
                             try {
                                 res.send(true)
@@ -327,7 +426,10 @@ try {
                 });
                 req.end();
                 process.listening = false;
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
                 return false;
 
             }
