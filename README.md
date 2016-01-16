@@ -9,6 +9,9 @@
 <p>Run pocketsphinx with:</p>
 <p>pocketsphinx_continuous -hmm /usr/local/share/pocketsphinx/model/en-us/en-us -lm ~/5016.lm -dict ~/5016.dic -topn 2 -ds 2 -maxwpf 5 -samprate 16000/8000/48000  -fwdflat no -pl_window 10 -maxhmmpf 50 -bestpath no -adcdev plughw:1,0  -inmic yes > ~/Butler/words.log</p>
 
-<p>Replace plughw:1,0 with your card number, so if alsa -l says your microphone is on card 2, change it to plughw:2,0 . This allows you to avoid fiddling with getting the microphone to card 0. That will allow pocketsphinx to throw the words into a file that Butler watches to check for commands</p>
+<p>Or you can stream the audio to your desktop or beefier computer to do the pocketpshinx processing on with: </p>
+<p>arecord -D plughw:1,0 -f S16_LE -r 16000 | ssh -C YOUR_USERNAME@YOUR_IP pocketsphinx_continuous -hmm /usr/local/share/pocketsphinx/model/en-us/en-us -dict 9063.dic -lm 9063.lm -infile /dev/stdin > ~/Butler/words.log</p>
+
+<p>Replace plughw:1,0 with your card number, so if arecord -l says your microphone is on card 2, change it to plughw:2,0 . This allows you to avoid fiddling with getting the microphone to card 0. That will allow pocketsphinx to throw the words into a file that Butler watches to check for commands</p>
 
 <p>Now run a NPM install and let it run. It sits on 2001 and runs https so that the mic doesn't have to keep being approved</p>
