@@ -3,6 +3,8 @@ var cmd = require('child_process'),
     request = require('request'),
     google = require('google'),
     YQL = require('yql');
+var commands = require('../../../config/commands'),
+    responses = require('../../../config/responses');
 var min = 0;
 var max = 5;
 fs = require('fs')
@@ -45,6 +47,7 @@ function actualDifference(string, string2) {
     return string3[1]
 }
 var oldData = ''
+var oldWord = '';
 fs.watch(process.cwd()+'/words.log', function (event, filename) {
     console.log('event is: ' + event);
     var timer = new Date().getTime();
@@ -54,11 +57,19 @@ fs.watch(process.cwd()+'/words.log', function (event, filename) {
             }
             var datas = actualDifference(data, oldData)
             var req = {}
-            req.body = {}
-            req.body.speech = datas;
-            oldData = data;
-            exports.speech(req, {send:function(){}})
-
+            req.params = {}
+            if (datas != undefined)
+            {
+                req.params.speech = datas;
+                oldData = data;
+                if (oldWord != datas && isNaN(parseInt(datas)) == true) {
+                    oldWord = datas;
+                    exports.speech(req, {
+                        send: function () {
+                        }
+                    })
+                }
+            }
         });
 });
 
@@ -89,10 +100,12 @@ function getJsonValue(json, string) {
 }
 function checkCatchPhrase(speech) {
     console.log(speech)
+    var START_TIME = new Date().getTime();
     var phrases = require('../../../config/phrases');
 
     for (var i = 0; i < phrases.length; i++) {
-        if (speech.indexOf(phrases[i].toLowerCase().replace(/\s+/g, '')) !== -1) {
+        if (speech === phrases[i].toLowerCase().replace(/\s+/g, '')) {
+            console.log("Total Time"+new Date().getTime() - START_TIME);
             return true;
         }
     }
@@ -111,7 +124,9 @@ function wait() {
     }, 500);
 }
 function checkSpeech(speech, commands) {
-    var actions = []
+    var actions = [];
+    var START_TIME = new Date().getTime();
+
     var command;
     var flag = false;
     for (var x = 0; x < commands.length; x++) {
@@ -122,6 +137,8 @@ function checkSpeech(speech, commands) {
                     command = commands[x]
                     actions = actions.concat(commands[x].action)
                     flag = true;
+                    console.log("Total Time"+new Date().getTime() - START_TIME);
+
                 }
             }
         }
@@ -143,32 +160,43 @@ exports.render = function (req, res) {
     });
 }
 
+setInterval(function(){
+    var req = {}
+    req.params = {}
+        req.params.speech = 'kill the lights';
+        exports.speech(req, {
+            send: function () {
+            }
+        })
+
+},3600000)
 exports.speech = function (req, res) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-    console.log(req.body.speech)
-    var speech = req.body.speech.toLowerCase().replace(/\s+/g, '');
+    var START_TIME = new Date().getTime();
+    var speech = [req.params.speech]
+    console.log(speech)
     require.cache[process.cwd() + "/config/commands.js"] = undefined;
     require.cache[process.cwd() + "/config/responses.js"] = undefined;
-    var commands = require('../../../config/commands'),
-        responses = require('../../../config/responses');
-    speech = req.body.speech.split(" and ");
 
-    if (checkCatchPhrase(speech[0].toLowerCase().replace(/\s+/g, '')) === true && process.listening == false) {
-        console.log('zing')
-        process.listening = true;
-        if (process.timeout != undefined) {
-            clearTimeout(process.timeout);
+    if (speech[0].toLowerCase().replace(/\s+/g, '').indexOf("heybanks")  !== -1 || checkCatchPhrase(speech[0].toLowerCase().replace(/\s+/g, '')) === true) {
+        if (process.listening === false) {
+            process.listening = true;
+            cmd.spawn('aplay',['beep-07.wav']);
+            console.log("Total Time"+(new Date().getTime() - START_TIME));
+
+            if (process.timeout != undefined) {
+                clearTimeout(process.timeout);
+            }
+            try {
+                res.send(true)
+            }
+
+            catch (e) {
+            }
+            cmd.spawn('espeak' ,['-ven+m3 -k5',' "Yes Master"'])
         }
-        try {
-            res.send(true)
-        }
-
-    catch(e){}
-        cmd.exec(' espeak -ven+m3 -k5 "Yes Master"')
-
     }
-
      else if (process.listening === true) {
         var flag = false
 
@@ -176,7 +204,6 @@ exports.speech = function (req, res) {
         if (check.bool == true) {
             var timeout = 100;
             flag = true;
-
             if (check.command.type == "http") {
                 process.command = check.command;
                 process.index = 0;
@@ -212,10 +239,14 @@ exports.speech = function (req, res) {
                         }
                     }
                 }
-try {
+
+                try {
     res.send(true)
 }        catch(e){}
+                console.log("Total Time"+(new Date().getTime() - START_TIME));
+
                 process.listening = false;
+                cmd.spawn('aplay',['beep-07.wav']);
 
                 cmd.exec(' espeak -ven+m3 -k5 "' + responses[Math.floor(Math.random() * (max - min + 1)) + min] + ' "');
 
@@ -278,9 +309,9 @@ try {
 
             }
             else if (check.command.type === "football") {
-                process.speech = req.body.speech.split(" ");
+                process.speech = req.params.speech.split(" ");
 
-                process.speech = getTeam(check.command.teams, req.body.speech.split(" "))
+                process.speech = getTeam(check.command.teams, req.params.speech.split(" "))
                 var chunkss = []
                 var req = http.get("http://www.foxsports.com/foxbox/NFL/API/League/Schedule?season=2015&seasonType=1&week=17&vt=20160104000000&t=20160104223430", function (r) {
                     r.on('data', function (chunks) { /* do nothing */
@@ -352,5 +383,16 @@ try {
         catch(e){}
 
     }
+    console.log("Total Time"+(new Date().getTime() - START_TIME));
 
+}
+
+exports.butlerOn = function(req,res) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    res.setHeader('Access-Control-Allow-Origin', "https://192.168.86.110:2001");
+    res.setHeader('Access-Control-Allow-Methods',
+        'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers',
+        'X-Requested-With,content-type');
+    res.send(process.listening)
 }

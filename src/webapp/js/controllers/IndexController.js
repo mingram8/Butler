@@ -5,14 +5,6 @@ app.controller('IndexController', function ($scope, $http, $sce, $interval, $tim
         setTimeout(function(){}, 500);
     }
     console.log(window.location.href)
-    $http({method:'post', url:'/sendSpeech', data:{speech:window.location.href}}).success(function(data){
-        if(data == true) {
-            setTimeout(function(){
-                location.reload();
-            }, 500);
-
-        }
-    })
     $scope.toggleFullScreen = function () {
         console.log('d')
         if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {  // current working methods
@@ -60,9 +52,8 @@ app.controller('IndexController', function ($scope, $http, $sce, $interval, $tim
                 console.log($scope.results)
                 if ($scope.results.indexOf('play') == -1) {
                     $http({
-                        method: 'post',
-                        url: '/sendSpeech',
-                        data: {speech: $scope.results}
+                        method: 'get',
+                        url: '/sendSpeech/'+$scope.results
                     }).success(function (data) {
                         if (data == true) {
                             setTimeout(function () {
@@ -79,7 +70,7 @@ app.controller('IndexController', function ($scope, $http, $sce, $interval, $tim
             $scope.final = $scope.linebreak($scope.final);
 
 
-            $http({method:'post', url:'/sendSpeech', data:{speech:$scope.final}}).success(function(data){
+            $http({method:'get', url:'/sendSpeech/'+$scope.final}).success(function(data){
                 if(data == true) {
                     setTimeout(function(){
                     location.reload();
